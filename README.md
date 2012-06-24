@@ -127,6 +127,7 @@ DeadSimpleCMS.configure do
     [:left, :center, :right].each do |pos|
       group(pos) do
         image :url, :width => 272, :height => 238, :default => "/images/products_lander/products_1.jpg"
+        # You can provide a default value as well, for when the CMS starts up.
         string :header, :default => "#{pos.to_s.titleize} Header"
         
         # Define a collection on "string", "integer" or "numeric" types if you want to limit the user to only a couple 
@@ -134,11 +135,7 @@ DeadSimpleCMS.configure do
         string :product_scope, :collection => lambda { SomeTable.all.map(&:product_scope) },
           :default => "books"
           
-        string :button_text, :default => "Action Here"
         string :href, :hint => link_hint
-        
-        # You can provide a default value as well, for when the CMS starts up.
-        text :paragraph, :default => "Mixbook's flagship product, photo books are fully-customizable - you can create your own layouts, add stickers and backgrounds, and more!"
       end
     end
   end
@@ -188,33 +185,33 @@ end
 For the view presenters, inherit from the `::DeadSimpleCMS::Group::Presenter`:
 
 ```ruby
-        # Public: Handles the banners on the site.
-        class BannerPresenter < ::DeadSimpleCMS::Group::Presenter
+# Public: Handles the banners on the site.
+class BannerPresenter < ::DeadSimpleCMS::Group::Presenter
 
-          attr_reader :coupon, :options, :size
+  attr_reader :coupon, :options, :size
 
-          def render
-            return unless coupon
-            url, alt, href, show, html_options = if coupon.same_code?(site_announcement.coupon_code)
-              [group.url, group.alt, group.href, group.show, {}]
-            else
-              url = "http://www.gettyimages.com/basketball.jpg"
-              [url, nil, group.promotional_href, true, {:onerror => "$(this).hide()"}]
-            end
+  def render
+    return unless coupon
+    url, alt, href, show, html_options = if coupon.same_code?(site_announcement.coupon_code)
+      [group.url, group.alt, group.href, group.show, {}]
+    else
+      url = "http://www.gettyimages.com/basketball.jpg"
+      [url, nil, group.promotional_href, true, {:onerror => "$(this).hide()"}]
+    end
 
-            # We can use any method accessible from the template since we simply delegate to the template.
-            link_to_if(href, image_tag(url, html_options.update(:class => "banner", :alt => alt)), href) if show
-          end
+    # We can use any method accessible from the template since we simply delegate to the template.
+    link_to_if(href, image_tag(url, html_options.update(:class => "banner", :alt => alt)), href) if show
+  end
 
-          private
+  private
 
-          def initialize_extra_arguments(coupon, options={})
-            @coupon, @options = coupon, options
-            @size = options.delete(:size) || :small # Currently we have two sizes for these banners: 715x85 and 890x123. - Aryk
-            raise("Invalid size: #{size}") unless [:small, :large].include?(size)
-          end
+  def initialize_extra_arguments(coupon, options={})
+    @coupon, @options = coupon, options
+    @size = options.delete(:size) || :small # Currently we have two sizes for these banners: 715x85 and 890x123. - Aryk
+    raise("Invalid size: #{size}") unless [:small, :large].include?(size)
+  end
 
-        end
+end
 ```
 
 Then in your views, you can do:
@@ -223,20 +220,20 @@ Then in your views, you can do:
 <%= DeadSimpleCMS.sections.current.banner.render(self, coupon, :size => :large) %>
 ```
 
-For the file uploader, make sure to 
+For the file uploader, simply extend from ::DeadSimpleCMS::FileUploader::Base and add #url and #upload! methods.
 
 ```ruby
-      class Mixbook::DeadSimpleCMS::FileUploader < ::DeadSimpleCMS::FileUploader::Base
+class Mixbook::DeadSimpleCMS::FileUploader < ::DeadSimpleCMS::FileUploader::Base
 
-        def url
-          # this should retrieve the url from where you uploaded the image to
-        end
+  def url
+    # this should retrieve the url to where the photo will be uploaded to.
+  end
 
-        def upload!
-          # put your upload logic here
-        end
+  def upload!
+     AWS::S3::S3Object.store(path, data, "mybucket", :access => :public_read)
+  end
 
-      end
+end
 ```
 
 Accessing Values
@@ -251,7 +248,6 @@ DeadSimpleCMS.sections.section1.save!
 # Access the data:
 DeadSimpleCMS.sections.section1.group1.group2.group3.attribute # => "new value"
 DeadSimpleCMS.sections.section1.groups[:group1].groups[:group2].attributes[:attribute].value # => "new value"
-
 ```
 
 Meta
