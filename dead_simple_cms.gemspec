@@ -24,7 +24,7 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency "rspec"
   gem.add_development_dependency "sqlite3"
 
-  s.description = <<-description
+  gem.description = <<-description
 Dead Simple CMS is a library for modifying different parts of your website without the overhead of having a
 fullblown CMS. The idea with this library is simple: provide an easy way to hook into different parts of your
 application (not only views) by defining the different parts to modify in an easy, straight-forward DSL.
