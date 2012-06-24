@@ -4,8 +4,8 @@ require File.expand_path('../lib/dead_simple_cms/version', __FILE__)
 Gem::Specification.new do |gem|
   gem.authors       = ["Aryk Grosz"]
   gem.email         = ["aryk@mixbook.com"]
-  gem.description   = %q{DeadSimpleCMS provides a way to define, modify, and present custom variables and content in your application}
-  gem.summary       = %q{DeadSimpleCMS provides a way to define, modify, and present custom variables and content in your application}
+  gem.description   = %q{DeadSimpleCMS provides a way to define, modify, and present custom variables and content in your application.}
+  gem.summary       = %q{DeadSimpleCMS provides a way to define, modify, and present custom variables and content in your application.}
   gem.homepage      = ""
 
   gem.files         = `git ls-files`.split($\)
