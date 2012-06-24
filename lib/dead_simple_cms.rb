@@ -111,13 +111,13 @@ module DeadSimpleCMS
     #   class MyFileUploader < DeadSimpleCMS::FileUploader::Base
     #
     #     def url
-    #       AWS::S3::Mixbook.prepend_asset_host(path)
+    #       # This should retrieve the url to where the photo will be uploaded to.
     #     end
-    #
+    #       
     #     def upload!
-    #       AWS::S3::S3Object.store(path, data, AWS::S3::Mixbook.bucket_name, :access => :public_read)
+    #       AWS::S3::S3Object.store(path, data, "mybucket", :access => :public_read)
     #     end
-    #
+    
     #   end
     #
     #
