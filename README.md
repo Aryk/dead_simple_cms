@@ -253,12 +253,10 @@ DeadSimpleCMS.sections.section1.groups[:group1].groups[:group2].attributes[:attr
 Meta
 ----
 
-Dead Simple CMS was originally written in two days and came out of the real business
-needs of [mixbook.com](http://www.mixbook.com).
+Dead Simple CMS was originally written in the course of a week for [mixbook.com](http://www.mixbook.com).
 
 We're based in Palo Alto (near California Ave) and we're hiring. We like dogs, beer, and music. If you're passionate
 (read: anal) about creating high quality products that makes people happy, please reach out to us at jobs@mixbook.com.
-
 
 Author
 ------
