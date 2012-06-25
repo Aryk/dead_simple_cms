@@ -21,16 +21,17 @@ module DeadSimpleCMS
 
         # Public: Render the dead simple cms with tabs
         # This is *coupled* with twitter bootstrap. If you are running it, this will work great, otherwise this will be sad.
+        # If you don't have the tabs functionality included, you will have to specify the JS file with :bootstrap_tab_js.
         # http://twitter.github.com/bootstrap/javascript.html#tabs
         def with_bootstrap_tabs(options={})
-          js = javascript_include_tag(options.delete(:bootstrap_tab_js) || "bootstrap-2.0.3/bootstrap-tab.js")
-          js << javascript_tag(<<-JAVASCRIPT)
-          $(document).ready(function() {
-            var $tabs = $('#section-tabs a') ;
-            $tabs.click(function (e) { e.preventDefault(); $(this).tab('show'); });
-            $("#" + (window.location.hash.replace("#", "") || "#{DeadSimpleCMS.sections.identifiers[0]}") + "-tab").tab('show');
-          })
+          js = javascript_tag(<<-JAVASCRIPT)
+            $(document).ready(function() {
+              var $tabs = $('#section-tabs a') ;
+              $tabs.click(function (e) { e.preventDefault(); $(this).tab('show'); });
+              $("#" + (window.location.hash.replace("#", "") || "#{DeadSimpleCMS.sections.identifiers[0]}") + "-tab").tab('show');
+            })
           JAVASCRIPT
+          js << javascript_include_tag(options.delete(:bootstrap_tab_js)) if options[:bootstrap_tab_js]
           lis = DeadSimpleCMS.sections.values.map do |section|
             content_tag(:li, link_to(section.label, "##{section.identifier.to_s.csserize}", :id => "#{section.identifier.to_s.csserize}-tab"))
           end.join.html_safe
@@ -40,6 +41,7 @@ module DeadSimpleCMS
               content_tag(:div, section(section), :class => "tab-pane", :id => "#{section.identifier.to_s.csserize}")
             end.join.html_safe
           end
+
           js + tabs + sections
         end
 
