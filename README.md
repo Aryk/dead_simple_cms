@@ -136,6 +136,13 @@ DeadSimpleCMS.configure do
           :default => "books"
           
         string :href, :hint => link_hint
+
+        # In case you need to include customer helpers to a group. You can also extend the top-level section as well.
+        extend(SomeModule) do
+          def even_more_methods
+            href + "?books=true" if product_scope=="books"
+          end
+        end
       end
     end
   end
