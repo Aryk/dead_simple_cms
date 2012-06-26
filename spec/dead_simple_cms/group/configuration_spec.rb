@@ -19,6 +19,7 @@ describe DeadSimpleCMS::Group::Configuration do
     it "should add to the attribute_arguments" do
       subject.attribute_arguments[:string_var].should == ["string", {:default => true}]
     end
+
   end
 
 end

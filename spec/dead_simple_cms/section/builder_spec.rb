@@ -11,6 +11,7 @@ describe DeadSimpleCMS::Section::Builder do
     end
 
     context "when a group_configuration is specified" do
+
       it "should inherit options from a group configuration" do
         section.banners.small.attributes[:url].required.should be true
         section.banners.small.attributes[:alt].default.should == "Design Beautiful Books"
