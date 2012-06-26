@@ -45,7 +45,7 @@ module DeadSimpleCMS
     end
 
     def fragments
-      @fragments.map { |f| f.is_a?(Proc) ? f.call(self) : f }
+      @fragments.map { |f| f.is_a?(Proc) ? f.call(self) : f }.flatten.uniq
     end
 
     def storage
