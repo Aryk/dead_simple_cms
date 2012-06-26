@@ -38,6 +38,13 @@ describe DeadSimpleCMS::Storage::Base do
     end
   end
 
+  describe "#to_param" do
+    it "should return an md5 hash" do
+      subject.stub(:read_value).and_return("here is a bunch of crazy data in yaml format")
+      subject.to_param.should == "747f7947ee62bfdf2790b91252f862e2"
+    end
+  end
+
   describe "#write" do
 
     it "should write_value with dump of attributes_hash" do

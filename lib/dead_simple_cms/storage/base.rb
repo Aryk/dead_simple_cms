@@ -1,3 +1,4 @@
+require 'digest/md5'
 module DeadSimpleCMS
   module Storage
     class Base
@@ -26,6 +27,11 @@ module DeadSimpleCMS
       # Public: Unique key for use in the storage mechanism.
       def unique_key
         @unique_key ||= section.identifier
+      end
+
+      # Creates a unique string to identify this data.
+      def to_param
+        (value = read_value) ? Digest::MD5.hexdigest(value) : nil
       end
 
       private

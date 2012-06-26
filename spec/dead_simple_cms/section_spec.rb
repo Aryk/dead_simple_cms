@@ -7,13 +7,19 @@ describe DeadSimpleCMS::Section do
   end
 
   its(:cache_key) { should == "cms/section_identifier" }
-  its(:to_param) { should == "section_identifier" }
   its(:path) { should == "/path" }
 
   describe "#root_group" do
     it "should add the root group on initialize" do
       section = described_class.new(:section_identifier)
       section.root_group.should be_an_instance_of DeadSimpleCMS::Group
+    end
+  end
+
+  describe "#to_param" do
+    it "should delegate to the storage" do
+      subject.storage.should_receive(:to_param).and_return(:result)
+      subject.to_param.should == :result
     end
   end
 

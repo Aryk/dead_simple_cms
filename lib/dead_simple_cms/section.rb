@@ -18,6 +18,8 @@ module DeadSimpleCMS
 
     before_save :upload_file_attributes
 
+    delegate :to_param, :to => :storage
+
     def initialize(identifier, options={}, &block)
       super(identifier, options)
       @path       = options[:path]
@@ -70,10 +72,6 @@ module DeadSimpleCMS
 
     def build(&block)
       Builder.new(self, &block)
-    end
-
-    def to_param
-      identifier.to_s
     end
 
     def cache_key
