@@ -16,6 +16,10 @@ describe DeadSimpleCMS::Section::Builder do
         section.banners.small.attributes[:url].required.should be true
         section.banners.small.attributes[:alt].default.should == "Design Beautiful Books"
       end
+
+      it "should keep attributes defined on the group" do
+        section.banners.small.attributes[:url].width.should == 715
+      end
     end
   end
 

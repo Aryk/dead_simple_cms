@@ -15,7 +15,7 @@ shared_context :sample_section do
       end
       group(:banners) do
         [[:small, 715, 85], [:large, 890, 123]].each do |size, width, height|
-          group size => :image_tag, :width => width, :height => height do
+          group size => :image_tag, :attribute_options => {:url => {:width => width, :height => height}} do
             boolean :show
             string :promotional_href, :hint => "Used for all custom coupon banners not from the site announcement."
             display DeadSimpleCMS::BannerPresenter
