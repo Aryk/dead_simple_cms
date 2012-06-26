@@ -48,14 +48,14 @@ module DeadSimpleCMS
         end
 
         def value=(value)
-          @value = convert_value(value)
+          attributes_from_storage[section_identifier] = convert_value(value)
         end
 
         # Public: Returns the non-blank value from the storage or the default.
         def value
-          return @value if instance_variable_defined?(:@value) # If the value was set to nil, we should return that value.
+         #  return @value if instance_variable_defined?(:@value) # If the value was set to nil, we should return that value.
           attributes = attributes_from_storage
-          @value = attributes.key?(section_identifier) ? attributes[section_identifier] : default
+          attributes.key?(section_identifier) ? attributes[section_identifier] : default
         end
 
         def inspect
