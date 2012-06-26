@@ -24,5 +24,11 @@ describe DeadSimpleCMS::Section::Builder do
     end
   end
 
+  describe "#extend" do
+    it "should add the methods to the section" do
+      section.should respond_to :test_function
+    end
+  end
+
 end
 

@@ -22,6 +22,12 @@ shared_context :sample_section do
           end
         end
       end
+
+      extend do
+        def test_function
+
+        end
+      end
     end
   end
 

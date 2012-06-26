@@ -7,6 +7,8 @@ module DeadSimpleCMS
       attr_accessor :group_hierarchy
       attr_reader :section
 
+      delegate :display, :extend, :to => :current_group
+
       def self.define_attribute_builder_method(klass)
         class_eval <<-RUBY, __FILE__, __LINE__ + 1
           def #{klass.builder_method_name}(identifier, options={})
@@ -22,10 +24,6 @@ module DeadSimpleCMS
         @section = section
         @group_hierarchy = []
         instance_eval(&block)
-      end
-
-      def display(*args, &block)
-        (current_group || section).display(*args, &block)
       end
 
       def group(*args, &block)
@@ -55,13 +53,14 @@ module DeadSimpleCMS
 
       private
 
+      # Public: Returns the current group. Since Section inherits from Group, it is also considered a group as well.
       def current_group
-        group_hierarchy.last
+        group_hierarchy.last || section
       end
 
       def nest_group(group)
         tmp = group_hierarchy
-        (group_hierarchy.last || section).add_group(group) # chain it with the last group or section if its top-level.
+        current_group.add_group(group) # chain it with the last group or section if its top-level.
         self.group_hierarchy += [group]
         yield
       ensure

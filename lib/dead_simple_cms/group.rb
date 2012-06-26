@@ -22,6 +22,12 @@ module DeadSimpleCMS
       @render_proc = block
     end
 
+    # Public: Exend functionality for the current group.
+    def extend(*modules, &block)
+      modules << Module.new(&block) if block_given?
+      super(*modules)
+    end
+
     # Public: If a presenter class was specified, returns an instance of the presenter.
     def presenter(view_context, *args)
       @presenter_class.new(view_context, *args) if @presenter_class
