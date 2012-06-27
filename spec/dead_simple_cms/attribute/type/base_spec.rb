@@ -21,6 +21,10 @@ describe DeadSimpleCMS::Attribute::Type::Base do
   subject { fake_attribute_class.new(:fake_identifier, :label => "Fake Label", :default => 413, :hint => "some hint",
     :group_hierarchy => group_hierarchy) }
 
+  before(:each) do
+    subject.stub(:attributes_from_storage).and_return({})
+  end
+
   describe ".builder_method_name" do
     it "should derive from the class name" do
       fake_attribute_class.builder_method_name.should == "fake_attribute"
@@ -71,14 +75,22 @@ describe DeadSimpleCMS::Attribute::Type::Base do
 
   describe "#value" do
 
-    context "when @value is set" do
-      before(:each) { subject.instance_variable_set(:@value, nil) }
+    context "when value is in attributes_from_storage" do
+      before(:each) do
+        subject.stub(:section_identifier).and_return(:foo)
+        subject.stub(:attributes_from_storage).and_return(:foo => 3)
+      end
 
-      its(:value) { should be nil }
+      its(:value) { should == 3 }
 
-      it "should not attempt to hit the storage" do
-        subject.should_receive(:attributes_from_storage).never
-        subject.value
+      context "and value is storage is nil and default is not nil" do
+
+        before(:each) do
+          subject.stub(:default).and_return(true)
+          subject.stub(:attributes_from_storage).and_return(:foo => nil)
+        end
+
+        its(:value) { should be_nil }
       end
     end
 

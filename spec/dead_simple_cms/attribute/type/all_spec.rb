@@ -215,8 +215,10 @@ describe DeadSimpleCMS::Attribute::Type::File do
       end
 
       before(:each) do
+        subject.stub(:attributes_from_storage).and_return({})
         subject.uploader_class = file_uploader_class
       end
+
       it "should call upload!" do
         subject.should_receive(:upload!).once
         subject.upload!

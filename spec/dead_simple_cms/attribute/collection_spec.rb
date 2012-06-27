@@ -29,7 +29,10 @@ describe DeadSimpleCMS::Attribute::Collection do
 
     let(:string_attribute) { DeadSimpleCMS::Attribute::Type::String.new(:string_attr) }
 
-    before(:each) { subject.add_attribute(string_attribute) }
+    before(:each) do
+      string_attribute.stub(:attributes_from_storage).and_return({})
+      subject.add_attribute(string_attribute)
+    end
 
     it "should create a getter method" do
       string_attribute.stub(:value).and_return("value")
