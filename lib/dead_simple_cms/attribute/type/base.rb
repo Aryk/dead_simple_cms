@@ -22,7 +22,6 @@ module DeadSimpleCMS
 
         VALID_INPUT_TYPES = [:string, :text, :select, :file, :radio].freeze
 
-
         attr_reader   :hint, :input_type, :group_hierarchy, :required
         attr_accessor :section
 

@@ -51,6 +51,10 @@ if defined?(ActionController)
   require 'dead_simple_cms/rails/action_controller/fragment_sweeper'
 end
 
+if defined?(Rails)
+  require 'dead_simple_cms/rails/railtie'
+end
+
 module DeadSimpleCMS
 
   extend self

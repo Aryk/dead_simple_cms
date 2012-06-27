@@ -52,6 +52,11 @@ module DeadSimpleCMS
       @storage ||= storage_class.new(self)
     end
 
+    # Public: Clears out the storage so new values can be repopulated. Used primarily to clear the values between refreshes.
+    def refresh!
+      @storage = nil
+    end
+
     # Public: Update the section values.
     #
     # Examples

@@ -55,6 +55,15 @@ describe DeadSimpleCMS::Section do
   describe "#storage" do
     specify { subject.storage.should be_a DeadSimpleCMS::Storage::Base }
   end
+
+  describe "#refresh!" do
+    before(:each) do
+      subject.instance_variable_set(:@storage, :some_value)
+      subject.refresh!
+    end
+
+    specify { subject.instance_variable_get(:@storage).should be_nil }
+  end
   
   describe "#update_attributes" do
     before(:each) do
