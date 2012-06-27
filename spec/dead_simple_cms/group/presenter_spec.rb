@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe DeadSimpleCMS::Group::Presenter do
+describe DeadSimpleCMS::Group::Presenter::Base do
 
   let(:view_context) { double("view context") }
   let(:group) { DeadSimpleCMS::Group.new(:group_identifier) }

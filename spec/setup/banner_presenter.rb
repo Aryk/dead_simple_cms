@@ -1,5 +1,5 @@
 module DeadSimpleCMS
-  class BannerPresenter < DeadSimpleCMS::Group::Presenter
+  class BannerPresenter < DeadSimpleCMS::Group::Presenter::Base
 
     attr_reader :coupon, :options, :size
 
