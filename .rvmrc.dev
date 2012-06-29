@@ -1,0 +1,2 @@
+rvm use 1.9.2-p290
+[[ `rvm gemset list | grep 'dead_simple_cms'` =~ "dead_simple_cms" ]] && rvm gemset use dead_simple_cms

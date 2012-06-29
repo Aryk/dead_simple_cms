@@ -17,3 +17,4 @@ test/version_tmp
 tmp
 
 dead_simple_cms.sqlite3
+.rvmrc
