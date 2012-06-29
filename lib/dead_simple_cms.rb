@@ -29,7 +29,8 @@ require 'dead_simple_cms/attribute/type/all'
 
 require 'dead_simple_cms/group'
 require 'dead_simple_cms/group/configuration'
-require 'dead_simple_cms/group/presenter'
+require 'dead_simple_cms/group/presenter/base'
+require 'dead_simple_cms/group/presenter/render_mixin'
 
 require 'dead_simple_cms/section'
 require 'dead_simple_cms/section/builder'

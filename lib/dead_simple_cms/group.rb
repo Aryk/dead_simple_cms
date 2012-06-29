@@ -5,7 +5,11 @@ module DeadSimpleCMS
 
     ROOT_IDENTIFIER = :root
 
-    attr_reader :groups, :presenter_class, :render_proc
+    attr_reader :groups
+    attr_accessor :parent
+
+    require 'dead_simple_cms/group/presenter/render_mixin'
+    include Presenter::RenderMixin
 
     def initialize(identifier, options={})
       @groups = DeadSimpleCMS::Group.new_dictionary
@@ -16,30 +20,10 @@ module DeadSimpleCMS
       new(ROOT_IDENTIFIER)
     end
 
-    # Public: Set different mechanisms for rendering this group.
-    def display(presenter_class=nil, &block)
-      @presenter_class = presenter_class
-      @render_proc = block
-    end
-
     # Public: Exend functionality for the current group.
     def extend(*modules, &block)
       modules << Module.new(&block) if block_given?
       super(*modules)
-    end
-
-    # Public: If a presenter class was specified, returns an instance of the presenter.
-    def presenter(view_context, *args)
-      @presenter_class.new(view_context, *args) if @presenter_class
-    end
-
-    # Public: Render the group using the passed in proc in the scope of the template.
-    def render(view_context, *args)
-      if @render_proc
-        view_context.instance_exec(self, *args, &@render_proc)
-      elsif presenter = presenter(view_context, self, *args)
-        presenter.render
-      end
     end
 
     def root?
@@ -47,6 +31,7 @@ module DeadSimpleCMS
     end
 
     def add_group(group)
+      group.parent = self
       groups.add(group)
       group_accessor(group)
     end

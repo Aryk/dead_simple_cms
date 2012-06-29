@@ -46,8 +46,9 @@ shared_examples :group_display do
   describe "#display" do
     context "when presenter_class is set" do
       it "should set the @presenter_class variable" do
-        subject.display :presenter_class
-        subject.instance_variable_get(:@presenter_class).should == :presenter_class
+        klass = Class.new(DeadSimpleCMS::Group::Presenter::Base)
+        subject.display klass
+        subject.presenter_class.should == klass
       end
     end
 
@@ -55,7 +56,7 @@ shared_examples :group_display do
       it "should set it to the @render_proc" do
         proc = lambda { "do something" }
         subject.display(&proc)
-        subject.instance_variable_get(:@render_proc).should == proc
+        subject.render_proc.should == proc
       end
     end
   end

@@ -19,6 +19,10 @@ module DeadSimpleCMS
         def initialize_extra_arguments(*args)
         end
 
+        def render
+          raise(NotImplementedError, "Please define your own #render method.")
+        end
+
       end
     end
   end

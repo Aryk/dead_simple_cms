@@ -14,22 +14,6 @@ describe DeadSimpleCMS::Group do
     specify { described_class.root.should be_an_instance_of described_class }
   end
   
-  describe "#presenter" do
-    context "when presenter_class is set" do
-
-      let(:presenter_class) { Struct.new(:view_context) }
-
-      before(:each) { subject.display(presenter_class) }
-
-      specify { subject.presenter(:view_context).should be_an_instance_of presenter_class }
-
-    end
-  end
-  
-  describe "#render" do
-  
-  end
-  
   describe "#root?" do
 
     its(:root?) { should be false }
@@ -57,6 +41,10 @@ describe DeadSimpleCMS::Group do
     it "should create an _attributes= writer" do
       nested_group.should_receive(:update_attributes).with(:value)
       subject.nested_group_attributes = :value
+    end
+
+    it "should set the parent" do
+      nested_group.parent.should == subject
     end
 
   end
