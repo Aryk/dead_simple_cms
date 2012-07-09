@@ -52,7 +52,6 @@ module DeadSimpleCMS
 
         # Public: Returns the non-blank value from the storage or the default.
         def value
-         #  return @value if instance_variable_defined?(:@value) # If the value was set to nil, we should return that value.
           attributes = attributes_from_storage
           attributes.key?(section_identifier) ? attributes[section_identifier] : default
         end
