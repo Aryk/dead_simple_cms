@@ -19,6 +19,11 @@ What it doesn't have:
  * Timing - set start and end time for different content
  * Page builder tools - this is not the right tool if you want to design full pages
 
+Install
+------------
+
+`gem install dead_simple_cms`
+
 Setup
 ------------
 
