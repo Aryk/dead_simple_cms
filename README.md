@@ -22,7 +22,12 @@ What it doesn't have:
 Setup
 ------------
 
-If you're Redis store isn't persistence, you can use the default option of using the database.
+Before getting started, it's important to note that this Gem does not have generators for building migrations, yet, 
+so integrating it with the app is sort of manual process for now.
+
+----
+
+If you're Redis store isn't persistent, you can use the default option of using the database.
 If you decide to use the database, you can create the schema with this:
 
 ```ruby
@@ -34,7 +39,7 @@ If you decide to use the database, you can create the schema with this:
   add_index :dead_simple_cms, :key, :unique => true
 ```
 
-Now, let's add the controller methods. Find a controller you want to use for your CMS:
+Now, let's add the controller methods. Find (or create) a controller you want to use for your CMS:
 
 ```ruby
 class Admin::CmsController < Admin::ApplicationController
@@ -89,7 +94,7 @@ Configuration
 -------------
 
 Create an initializer for your app in lib/config/initializers/dead_simple_cms. You can overwrite any of the original
-settings.
+settings. Here is an example template from which you can modify on your own.
 
 ```ruby
 DeadSimpleCMS.configure do
@@ -178,6 +183,7 @@ DeadSimpleCMS.configure do
           display Mixbook::DeadSimpleCMS::Presenters::SiteAnnouncement::TopBarPresenter
         end
         group :banner => :image_tag, :width => width, :height => height do
+          # Here additional fields to add onto the group.
           boolean :show
           string :promotional_href, :hint => "Used for all custom coupon banners not from the site announcement."
           display Mixbook::DeadSimpleCMS::Presenters::SiteAnnouncement::BannerPresenter
@@ -189,7 +195,7 @@ DeadSimpleCMS.configure do
 end
 ```
 
-For the view presenters, inherit from the `::DeadSimpleCMS::Group::Presenter`:
+For the view presenters, inherit from the `::DeadSimpleCMS::Group::Presenter`. 
 
 ```ruby
 # Public: Handles the banners on the site.
@@ -197,6 +203,7 @@ class BannerPresenter < ::DeadSimpleCMS::Group::Presenter
 
   attr_reader :coupon, :options, :size
 
+  # The render method is used to create the html that will be inserted into the page.
   def render
     return unless coupon
     url, alt, href, show, html_options = if coupon.same_code?(site_announcement.coupon_code)
@@ -212,6 +219,8 @@ class BannerPresenter < ::DeadSimpleCMS::Group::Presenter
 
   private
 
+  # If you define this method, you can add on additional arguments. I created a separate function like this instead of
+  # overwriting initialize since I don't want the user to have to know how this works internally.
   def initialize_extra_arguments(coupon, options={})
     @coupon, @options = coupon, options
     @size = options.delete(:size) || :small # Currently we have two sizes for these banners: 715x85 and 890x123. - Aryk
@@ -260,10 +269,11 @@ DeadSimpleCMS.sections.section1.groups[:group1].groups[:group2].attributes[:attr
 Meta
 ----
 
-Dead Simple CMS was originally written in the course of a week for [mixbook.com](http://www.mixbook.com).
+Dead Simple CMS was originally written by Aryk Grosz in the course of a week for [mixbook.com](http://www.mixbook.com).
 
-We're based in Palo Alto (near California Ave) and we're hiring. We like dogs, beer, and music. If you're passionate
-(read: anal) about creating high quality products that makes people happy, please reach out to us at jobs@mixbook.com.
+Mixbook is based in Palo Alto (near California Ave) and we're hiring. We like dogs, beer, and music. If you're 
+passionate (read: anal) about creating high quality products and software that makes people happy, please reach out 
+to us at jobs@mixbook.com.
 
 Author
 ------
