@@ -2,8 +2,6 @@ module DeadSimpleCMS
   # Public: Represents a section in the website a user wants to be able to modify the data in an immediate-simple way.
   class Section < Group
 
-    include Util::Identifier
-
     include ActiveModel::Observing
 
     extend ActiveModel::Callbacks
