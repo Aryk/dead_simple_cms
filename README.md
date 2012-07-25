@@ -187,7 +187,7 @@ DeadSimpleCMS.configure do
           # with the current template as the first arg, and any other arguments afterwards.
           display Mixbook::DeadSimpleCMS::Presenters::SiteAnnouncement::TopBarPresenter
         end
-        group :banner => :image_tag, :width => width, :height => height do
+        group :banner => :image_tag, :width => 400, :height => 600 do
           # Here additional fields to add onto the group.
           boolean :show
           string :promotional_href, :hint => "Used for all custom coupon banners not from the site announcement."
