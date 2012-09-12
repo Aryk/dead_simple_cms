@@ -3,6 +3,8 @@
 .bundle
 .config
 .yardoc
+.idea
+.DS_Store
 Gemfile.lock
 InstalledFiles
 _yardoc
@@ -18,3 +20,4 @@ tmp
 
 dead_simple_cms.sqlite3
 .rvmrc
+.rbenv-version
