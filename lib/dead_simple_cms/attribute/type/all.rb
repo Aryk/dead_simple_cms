@@ -36,6 +36,11 @@ module DeadSimpleCMS
         self.default_input_type = :string
         include CollectionSupport
       end
+      class Float < Numeric
+        def convert_value(value)
+          value && value.to_f
+        end
+      end
       class Integer < Numeric
         def convert_value(value)
           value && value.to_i

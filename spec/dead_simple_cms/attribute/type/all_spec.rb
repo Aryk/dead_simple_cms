@@ -139,6 +139,26 @@ describe DeadSimpleCMS::Attribute::Type::Integer do
   end
 
 end
+describe DeadSimpleCMS::Attribute::Type::Float do
+
+  include_context "Attribute Setup"
+
+  it_behaves_like DeadSimpleCMS::Attribute::Type::CollectionSupport
+
+  its(:default_input_type) { should == :string }
+
+  describe "#convert_value" do
+    it "should convert the value into an integer" do
+      subject.send(:convert_value, "5.45").should eq 5.45
+    end
+
+    it "should return nil if nil passed in" do
+      subject.send(:convert_value, nil).should eq nil
+    end
+
+  end
+
+end
 describe DeadSimpleCMS::Attribute::Type::File do
 
   include_context "Attribute Setup"
