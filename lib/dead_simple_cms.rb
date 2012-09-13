@@ -80,7 +80,7 @@ module DeadSimpleCMS
 
     # Register any additional attribute classes for use in your configuration.
     register_attribute_classes(Attribute::Type::String, Attribute::Type::Text, Attribute::Type::Numeric, Attribute::Type::Integer,
-      Attribute::Type::Boolean, Attribute::Type::File, Attribute::Type::Image, Attribute::Type::Symbol)
+      Attribute::Type::Float, Attribute::Type::Boolean, Attribute::Type::File, Attribute::Type::Image, Attribute::Type::Symbol)
 
     # Set the default form builder used for building the CMS forms in the app. You can replace this with :simple_form,
     # :simple_form_with_bootstrap or pass in the actual builder class. Your builder class must include the interface:
