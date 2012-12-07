@@ -10,12 +10,12 @@ module DeadSimpleCMS
               class_attribute :form_for_method
               self.form_for_method = :form_for
 
-              class_inheritable_hash :form_for_options
+              class_attribute :form_for_options
               self.form_for_options = {}
 
               [:update, :actions, :preview, :attribute].each do |name|
                 option_name = "#{name}_options"
-                class_inheritable_hash option_name, :instance_writer => false
+                class_attribute option_name, :instance_writer => false
                 self.send("#{option_name}=", {})
               end
             end
