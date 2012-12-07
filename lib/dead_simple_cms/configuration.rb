@@ -1,5 +1,7 @@
 module DeadSimpleCMS
   class Configuration
+    class_attribute :attribute_classes
+    self.attribute_classes = []
 
     def section(identifier, options={}, &block)
       section = DeadSimpleCMS::Section.new(identifier, options, &block)
@@ -16,6 +18,7 @@ module DeadSimpleCMS
       classes.each do |klass|
         DeadSimpleCMS::Section::Builder.define_attribute_builder_method(klass)
         Group::Configuration.define_attribute_builder_method(klass)
+        attribute_classes << klass
       end
     end
 
