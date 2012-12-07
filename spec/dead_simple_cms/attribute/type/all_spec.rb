@@ -119,6 +119,38 @@ describe DeadSimpleCMS::Attribute::Type::Numeric do
   its(:default_input_type) { should == :string }
 
 end
+describe DeadSimpleCMS::Attribute::Type::Datetime do
+
+  include_context "Attribute Setup"
+
+  its(:default_input_type) { should == :datetime }
+
+  describe ".convert_attributes" do
+    let(:original_attributes) do
+      {
+        "foo" => "bar",
+        "bla(1i)" => "2000",
+        "bla(2i)" => "10",
+        "bla(3i)" => "23",
+        "bla(4i)" => "11",
+        "bla(5i)" => "55"
+      }
+    end
+    let(:final_attributes) { { "foo" => "bar", "bla" => DateTime.civil(2000, 10, 23, 11, 55) } }
+    subject { described_class.convert_attributes(original_attributes) }
+
+    it "returns hash with datatime object instead of flat string values" do
+      subject.should == final_attributes
+    end
+
+    it "modifies original attributes" do
+      subject
+      original_attributes.should == final_attributes
+    end
+  end
+
+end
+
 describe DeadSimpleCMS::Attribute::Type::Integer do
 
   include_context "Attribute Setup"

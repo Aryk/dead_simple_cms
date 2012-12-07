@@ -46,6 +46,27 @@ module DeadSimpleCMS
           value && value.to_i
         end
       end
+      class Datetime < Base
+        self.default_input_type = :datetime
+
+        def self.convert_attributes(attributes)
+          date_attrs = attributes.keys.inject({}) do |new_hash, key|
+            if key =~ /\(\d+i\)$/
+              attr_name = key.match(/^(.*)\(\d+i\)$/)[1]
+              new_hash[attr_name] ||= {}
+              new_hash[attr_name][key] = attributes.delete(key)
+            end
+            new_hash
+          end
+          if date_attrs.present?
+            date_attrs.each do |attr_name, values|
+              datetime = ::DateTime.civil(*values.sort.map(&:second).map(&:to_i))
+              attributes[attr_name] = datetime
+            end
+          end
+          attributes
+        end
+      end
       # Public: File attributes are stored at some publicly accessible url.
       class File < Base
         self.default_input_type = :file

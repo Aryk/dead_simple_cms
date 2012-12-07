@@ -20,7 +20,7 @@ module DeadSimpleCMS
         # Public: a Symbol representing the default input type required for forms
         class_attribute :default_input_type, :instance_writer => false
 
-        VALID_INPUT_TYPES = [:string, :text, :select, :file, :radio].freeze
+        VALID_INPUT_TYPES = [:string, :text, :select, :file, :radio, :datetime].freeze
 
         attr_reader   :hint, :input_type, :group_hierarchy, :required
         attr_accessor :section

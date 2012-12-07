@@ -23,6 +23,11 @@ describe DeadSimpleCMS::Attribute::Collection do
       subject.update_attributes(:foo => :bar)
     end
 
+    it "should convert attributes if there is attribute types, which support that" do
+      subject.stub(:foo=)
+      DeadSimpleCMS::Attribute::Type::Datetime.should_receive(:convert_attributes).with(:foo => :bar)
+      subject.update_attributes(:foo => :bar)
+    end
   end
 
   describe "#add_attribute" do

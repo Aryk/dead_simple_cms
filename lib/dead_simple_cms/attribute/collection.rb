@@ -22,6 +22,9 @@ module DeadSimpleCMS
       end
 
       def update_attributes(attributes)
+        Configuration.attribute_classes.each do |klass|
+          klass.convert_attributes(attributes) if klass.respond_to?(:convert_attributes)
+        end
         attributes.each { |k, v| send("#{k}=", v) }
       end
 
