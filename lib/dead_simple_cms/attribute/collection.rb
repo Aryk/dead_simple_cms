@@ -22,6 +22,18 @@ module DeadSimpleCMS
       end
 
       def update_attributes(attributes)
+        # Sometimes we have to do initial preparing of attributes, before sending them to updating.
+        # For example, if we use select_datetime from Rails, it creates many fields in params, so the resulting
+        # params may look like:
+        #
+        #    {'foo' => 'bar', 'date(1i)' => '2000', 'date(2i)' => '10', 'date(3i)' => '30'}
+        #
+        # Of course we have to modify it to put everything into the same key, like:
+        #
+        #    {'foo' => 'bar', 'date' => '2000-10-30'}
+        #
+        # or something like that. So, if your attribute type requires such transformations, please specify
+        # .convert_attributes method in it.
         Configuration.attribute_classes.each do |klass|
           klass.convert_attributes(attributes) if klass.respond_to?(:convert_attributes)
         end
