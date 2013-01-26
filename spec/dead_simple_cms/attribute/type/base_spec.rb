@@ -57,7 +57,22 @@ describe DeadSimpleCMS::Attribute::Type::Base do
       its (:root_group?) { should be true }
     end
   end
-  
+
+  describe "#hint" do
+
+    its(:hint) { should == "some hint" }
+
+    context "when hint is passed in as a Proc" do
+      before(:each) do
+        delayed_hint = 123
+        subject.instance_variable_set(:@hint, lambda { delayed_hint } )
+      end
+
+      its(:hint) { should == 123 }
+
+    end
+  end
+
   describe "#default" do
 
     its (:default) { should == 413 }

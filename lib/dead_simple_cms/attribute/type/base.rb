@@ -22,7 +22,7 @@ module DeadSimpleCMS
 
         VALID_INPUT_TYPES = [:string, :text, :select, :file, :radio, :datetime].freeze
 
-        attr_reader   :hint, :input_type, :group_hierarchy, :required
+        attr_reader   :input_type, :group_hierarchy, :required
         attr_accessor :section
 
         def initialize(identifier, options={})
@@ -40,6 +40,10 @@ module DeadSimpleCMS
         # Public: The identifier on the section level. It must be unique amongst the groups.
         def section_identifier
           (group_hierarchy + [self]).map(&:identifier).join("_").to_sym
+        end
+
+        def hint
+          @hint.is_a?(Proc) ? @hint.call : @hint
         end
 
         def default
