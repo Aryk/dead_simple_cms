@@ -9,7 +9,7 @@ module DeadSimpleCMS
           include Interface
 
           # Public: Translation of the Attribute::Type::Base#input_type to :as option for SimpleForm.
-          AS_LOOKUP = Hash.new { |h, k| k }.update(:radio => :radio_buttons)
+          AS_LOOKUP = Hash.new { |h, k| k }.update(:radio => :radio_buttons, :check_box => :boolean)
 
           self.preview_options = {:target => "_blank"}
 
@@ -24,7 +24,6 @@ module DeadSimpleCMS
             options = {:required => attribute.required, :hint => hint, :as => as, :label => attribute.label}
             if attribute.is_a?(Attribute::Type::CollectionSupport) && (collection = attribute.collection)
               options[:collection] = collection
-              options[:as] = as
               options[:include_blank] = false if as==:select
             end
 

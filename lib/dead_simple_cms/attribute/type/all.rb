@@ -16,9 +16,7 @@ module DeadSimpleCMS
         private :convert_value
       end
       class Boolean < Base
-        self.default_input_type = :radio
-
-        include CollectionSupport
+        self.default_input_type = :check_box
 
         def initialize(identifier, options={})
           options.update(:collection => [true, false], :default => false)

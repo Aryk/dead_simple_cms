@@ -25,11 +25,12 @@ module DeadSimpleCMS
           def attribute(attribute)
             label(attribute.identifier, attribute.label) +
               case attribute.input_type
-              when :string then text_field(attribute.identifier)
-              when :text   then text_area(attribute.identifier)
-              when :file   then file_field(attribute.identifier)
-              when :select then select(attribute.identifier, attribute.collection)
-              when :radio  then radio_buttons(attribute.identifier, attribute.collection)
+              when :string    then text_field(attribute.identifier)
+              when :text      then text_area(attribute.identifier)
+              when :file      then file_field(attribute.identifier)
+              when :select    then select(attribute.identifier, attribute.collection)
+              when :radio     then radio_buttons(attribute.identifier, attribute.collection)
+              when :check_box then check_box(attribute.identifier)
               else              raise("Unknown type: #{attribute.identifier}")
               end
           end
