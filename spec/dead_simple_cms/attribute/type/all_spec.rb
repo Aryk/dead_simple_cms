@@ -74,10 +74,7 @@ describe DeadSimpleCMS::Attribute::Type::Boolean do
 
   include_context "Attribute Setup"
 
-  it_behaves_like DeadSimpleCMS::Attribute::Type::CollectionSupport
-
-  its(:default_input_type) { should == :radio }
-  its(:collection) { should == [true, false] }
+  its(:default_input_type) { should == :check_box }
 
   describe "#convert_value" do
     it %{should convert "true" or "1" into TrueClass} do
