@@ -51,7 +51,9 @@ module DeadSimpleCMS
 
         def form(section, options={})
           options.reverse_merge!(:builder => form_builder, :url => {:action => :edit})
-          options.reverse_merge!(options[:builder].form_for_options)
+          # Options passed to simple_form_for are changed inplace inside gem, see -
+          # https://github.com/plataformatec/simple_form/blob/master/lib/simple_form/action_view_extensions/form_helper.rb#L26
+          options.reverse_merge!(options[:builder].form_for_options.deep_dup)
 
           (options[:html] ||= {}).update(:multipart => true) if section.attributes.values.any? { |a| a.input_type == :file }
 
