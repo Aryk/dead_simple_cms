@@ -55,7 +55,7 @@ module DeadSimpleCMS
             section_or_group.groups.values.map do |group|
               next if group.attributes.empty? && group.groups.empty?
               fields_for(group.identifier, options) do |builder|
-                @template.content_tag(:fieldset) do
+                @template.content_tag(:fieldset, :id => Util::String.csserize(group.identifier)) do
                   # Following fieldset/legend convention: https://github.com/twitter/bootstrap/issues/1214
                   legend        = @template.content_tag(:legend, group.label) unless group.root? # don't show the group name if it's the root group.
                   attributes    = group.attributes.values.map { |attribute| builder.attribute(attribute) }.join.html_safe

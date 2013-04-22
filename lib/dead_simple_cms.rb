@@ -10,6 +10,7 @@ require 'active_model'
 
 require 'dead_simple_cms/configuration'
 
+require 'dead_simple_cms/util/string'
 require 'dead_simple_cms/util/identifier'
 require 'dead_simple_cms/file_uploader/base'
 
@@ -93,7 +94,7 @@ module DeadSimpleCMS
     # If you create your own, please provide the full class name.
     #
     # If you choose to use the database, make sure to create a database table to hold the data:
-    #      
+    #
     #    create_table :dead_simple_cms, :force => true do |t|
     #      t.string :key
     #      t.text :value
@@ -119,11 +120,11 @@ module DeadSimpleCMS
     #     def url
     #       # This should retrieve the url to where the photo will be uploaded to.
     #     end
-    #       
+    #
     #     def upload!
     #       AWS::S3::S3Object.store(path, data, "mybucket", :access => :public_read)
     #     end
-    
+
     #   end
     #
     #
