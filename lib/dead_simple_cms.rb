@@ -10,7 +10,7 @@ require 'active_model'
 
 require 'dead_simple_cms/configuration'
 
-require 'dead_simple_cms/util/string'
+require 'dead_simple_cms/util'
 require 'dead_simple_cms/util/identifier'
 require 'dead_simple_cms/file_uploader/base'
 

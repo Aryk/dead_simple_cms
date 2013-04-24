@@ -33,13 +33,13 @@ module DeadSimpleCMS
           JAVASCRIPT
           js << javascript_include_tag(options.delete(:bootstrap_tab_js)) if options[:bootstrap_tab_js]
           lis = DeadSimpleCMS.sections.values.map do |section|
-            section_id = Util::String.csserize(section.identifier)
+            section_id = Util.csserize(section.identifier)
             content_tag(:li, link_to(section.label, "##{section_id}", :id => "#{section_id}-tab"))
           end.join.html_safe
           tabs = content_tag(:ul, lis, :class => "nav nav-tabs", :id => "section-tabs")
           sections = content_tag(:div, :class => "tab-content") do
             DeadSimpleCMS.sections.values.map do |section|
-              content_tag(:div, section(section), :class => "tab-pane", :id => Util::String.csserize(section.identifier))
+              content_tag(:div, section(section), :class => "tab-pane", :id => Util.csserize(section.identifier))
             end.join.html_safe
           end
 
