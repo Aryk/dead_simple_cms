@@ -11,7 +11,7 @@ module DeadSimpleCMS
         # Make sure we expire any fragments that we are using on those pages.
         def after_save(section)
           section.fragments.each do |fragment|
-            if fragment.has_key?(:cell)
+            if fragment.is_a?(Hash) && fragment.has_key?(:cell)
               expire_cell_state(fragment[:cell], fragment[:state])
             else
               expire_fragment(fragment)
