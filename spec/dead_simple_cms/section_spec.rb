@@ -6,7 +6,6 @@ describe DeadSimpleCMS::Section do
     described_class.new(:section_identifier, :path => "/path" )
   end
 
-  its(:cache_key) { should == "cms/section_identifier" }
   its(:path) { should == "/path" }
 
   describe "#root_group" do
@@ -40,7 +39,7 @@ describe DeadSimpleCMS::Section do
       end
     end
   end
-  
+
   describe "#fragments" do
     context "when some fragments are proc" do
       before(:each) do
@@ -51,7 +50,7 @@ describe DeadSimpleCMS::Section do
     end
 
   end
-  
+
   describe "#storage" do
     specify { subject.storage.should be_a DeadSimpleCMS::Storage::Base }
   end
@@ -64,7 +63,21 @@ describe DeadSimpleCMS::Section do
 
     specify { subject.instance_variable_get(:@storage).should be_nil }
   end
-  
+
+  describe "#cache_key" do
+    before do
+      subject.build { string :string_attribute }
+    end
+
+    its(:cache_key) { should == "cms/section_identifier/8d0f9ad6dab42d30d259ebd656b4d5ae" }
+
+    it "changes when value is changed" do
+      expect {
+        subject.update_attributes(:string_attribute => "value")
+      }.to change(subject, :cache_key)
+    end
+  end
+
   describe "#update_attributes" do
     before(:each) do
       subject.build do
@@ -88,6 +101,6 @@ describe DeadSimpleCMS::Section do
       subject.save!
     end
   end
-  
+
 end
 
