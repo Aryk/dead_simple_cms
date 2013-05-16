@@ -78,7 +78,7 @@ module DeadSimpleCMS
     end
 
     def cache_key
-      "cms/#{identifier}"
+      "cms/#{identifier}/#{to_param}"
     end
 
     private
