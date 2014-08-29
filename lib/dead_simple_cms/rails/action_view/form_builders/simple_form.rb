@@ -22,12 +22,15 @@ module DeadSimpleCMS
             hint = attribute.hint.to_s.dup
             hint << %{ <a href="#{attribute.value}" target="_blank">preview</a>} if attribute.is_a?(Attribute::Type::Image)
             options = {:required => attribute.required, :hint => hint, :as => as, :label => attribute.label}
+            if attribute.length
+              options[:input_html] = {maxlength: attribute.length}
+            end
             if attribute.is_a?(Attribute::Type::CollectionSupport) && (collection = attribute.collection)
               options[:collection] = collection
               options[:include_blank] = false if as==:select
             end
 
-            input(attribute.identifier, attribute_options.update(options))
+            input(attribute.identifier, attribute_options.merge(options))
           end
 
           def update

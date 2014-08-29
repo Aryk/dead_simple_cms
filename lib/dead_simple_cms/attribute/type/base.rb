@@ -27,8 +27,8 @@ module DeadSimpleCMS
 
         def initialize(identifier, options={})
           options.reverse_merge!(:group_hierarchy => [], :input_type => default_input_type, :required => false)
-          @hint, @default, @input_type, @group_hierarchy, @section, @required =
-            options.values_at(:hint, :default, :input_type, :group_hierarchy, :section, :required)
+          @hint, @default, @input_type, @group_hierarchy, @section, @required, @length =
+            options.values_at(:hint, :default, :input_type, :group_hierarchy, :section, :required, :length)
           raise("Invalid input type: #{input_type.inspect}. Should be one of #{VALID_INPUT_TYPES}.") unless VALID_INPUT_TYPES.include?(input_type)
           super
         end
@@ -44,6 +44,10 @@ module DeadSimpleCMS
 
         def hint
           @hint.is_a?(Proc) ? @hint.call : @hint
+        end
+
+        def length
+          @length.is_a?(Proc) ? @length.call : @length
         end
 
         def default
