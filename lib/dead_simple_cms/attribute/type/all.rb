@@ -58,11 +58,17 @@ module DeadSimpleCMS
           end
           if date_attrs.present?
             date_attrs.each do |attr_name, values|
-              datetime = ::DateTime.civil(*values.sort.map(&:second).map(&:to_i))
+              datetime = ::Time.zone.local(*values.sort.map { |v| v.second.to_i }).to_datetime
               attributes[attr_name] = datetime
             end
           end
           attributes
+        end
+
+        def value
+          if datetime_value = super
+            datetime_value.in_time_zone.to_datetime
+          end
         end
       end
       # Public: File attributes are stored at some publicly accessible url.
