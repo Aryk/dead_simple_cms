@@ -46,10 +46,31 @@ module DeadSimpleCMS
         end
 
         def [](key)
-          super(to_identifier(key))
+          result = super(to_identifier(key))
+          maybe_build_block(result)
+          result
+        end
+
+        def each(&block)
+          super do |k, v|
+            maybe_build_block(v)
+            block[k, v]
+          end
+        end
+
+        def values
+          results = super
+          results.each do |result|
+            maybe_build_block(result)
+          end
+          results
         end
 
         private
+
+        def maybe_build_block(value)
+          value.build_block! if value.respond_to?(:build_block!)
+        end
 
         # Private: Cast an identifier or other object into an identifier.
         def to_identifier(identifier)
