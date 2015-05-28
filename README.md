@@ -257,6 +257,9 @@ class Mixbook::DeadSimpleCMS::FileUploader < ::DeadSimpleCMS::FileUploader::Base
 end
 ```
 
+Please note that section blocks are lazy, and only will be executed on the first access to the values,
+e.g. by `DeadSimpleCMS.sections.site_annoucement`. You can force execution by `DeadSimpleCMS::Section#build_block!`
+
 Accessing Values
 -----
 

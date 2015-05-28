@@ -23,9 +23,14 @@ module DeadSimpleCMS
       @path       = options[:path]
       @root_group = Group.root # The root group for the section.
       @fragments  = Array.wrap(options[:fragments])
+      @block = block
       add_group(@root_group)
+      @is_loaded = false
+    end
 
-      build(&block) if block_given?
+    def build_block!
+      build(&@block) if @block && !@is_loaded
+      @is_loaded = true
     end
 
     # Public: Update the sections with the params and return the updated sections.

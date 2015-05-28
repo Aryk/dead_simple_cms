@@ -3,7 +3,7 @@ shared_context :sample_section do
   let(:section) do
     # Site announcement is an example of a potential use case. It leverages a lot of the functionality of the
     # library, hence why we are teting against it.
-    DeadSimpleCMS::Section.new(:site_announcement, :path => "/") do
+    section = DeadSimpleCMS::Section.new(:site_announcement, :path => "/") do
       boolean :show_default, :default => false
       string :coupon_code
       group(:top_bar) do
@@ -29,6 +29,8 @@ shared_context :sample_section do
         end
       end
     end
+    section.build_block!
+    section
   end
 
 end
