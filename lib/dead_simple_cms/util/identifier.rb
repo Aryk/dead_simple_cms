@@ -17,14 +17,10 @@ module DeadSimpleCMS
         attr_accessor :label, :identifier
       end
 
-      module InstanceMethods
-
-        def initialize(identifier, options={})
-          @identifier = identifier.to_sym
-          @label = options[:label] || identifier.to_s.titleize
-          super()
-        end
-
+      def initialize(identifier, options={})
+        @identifier = identifier.to_sym
+        @label = options[:label] || identifier.to_s.titleize
+        super()
       end
 
       module ClassMethods
