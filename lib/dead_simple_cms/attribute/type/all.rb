@@ -19,7 +19,8 @@ module DeadSimpleCMS
         self.default_input_type = :check_box
 
         def initialize(identifier, options={})
-          options.update(:collection => [true, false], :default => false)
+          options = {collection: [true, false], default: false}.merge(options)
+
           super
         end
 
