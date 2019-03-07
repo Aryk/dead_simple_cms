@@ -22,7 +22,7 @@ Gem::Specification.new do |gem|
 
   gem.add_development_dependency "simple_form"
   gem.add_development_dependency "rails", ">= 3.0"
-  gem.add_development_dependency "rspec"
+  gem.add_development_dependency "rspec",  "2.11.0"
   gem.add_development_dependency "sqlite3"
 
   gem.description = <<-description

@@ -76,6 +76,16 @@ describe DeadSimpleCMS::Attribute::Type::Boolean do
 
   its(:default_input_type) { should == :check_box }
 
+  describe '#initialize' do
+    context 'with default option specified' do
+      let(:options) { {default: true} }
+
+      it 'has default options set to true' do
+        expect(subject.default).to be true
+      end
+    end
+  end
+
   describe "#convert_value" do
     it %{should convert "true" or "1" into TrueClass} do
       ["True", "true", "1", "TruE"].each do |str|
