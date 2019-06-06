@@ -20,7 +20,10 @@ module DeadSimpleCMS
           def attribute(attribute)
             as = AS_LOOKUP[attribute.input_type]
             hint = attribute.hint.to_s.dup
-            hint << %{ <a href="#{attribute.value}" target="_blank">preview</a>} if attribute.is_a?(Attribute::Type::Image)
+            if attribute.is_a?(Attribute::Type::Image) && attribute.value.present?
+              hint << %{ <img src="#{attribute.value}" > }
+            end
+
             options = {:required => attribute.required, :hint => hint, :as => as, :label => attribute.label}
             if attribute.length
               options[:input_html] = {maxlength: attribute.length}
